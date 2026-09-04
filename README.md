@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/31822347/README.md)
+
 <div align="center">
 
 # 🌸 CICLA
@@ -57,27 +57,6 @@ La app aplica las reglas reales del STM (**Regla del Triple Térmico** + **Regla
 
 ---
 
-## Arquitectura
-
-El proyecto aplica **Clean Architecture + MVVM** con una separación estricta en tres capas:
-
-```
-src/
-├── domain/          ← Núcleo — TypeScript puro, sin dependencias externas
-│   ├── entities/    ← CycleDay, Cycle, FertilityStatus, enums
-│   ├── usecases/    ← Algoritmo STM, validaciones, orquestación
-│   └── repositories/← Interfaces (contratos abstractos)
-│
-├── data/            ← Implementaciones concretas
-│   ├── models/      ← Modelos @WatermelonDB
-│   ├── repositories/← Implementan las interfaces del dominio
-│   └── mappers/     ← Convierten DB model ↔ domain entity
-│
-└── presentation/    ← UI y estado
-    ├── stores/      ← Estado global con Zustand
-    ├── viewmodels/  ← Lógica de presentación (custom hooks)
-    └── components/  ← atoms / molecules / organisms
-```
 
 **Regla de dependencia:** el Domain Layer no puede importar nada de React, Expo ni WatermelonDB. Si hay un `import` de una librería externa dentro de `/domain`, es un error arquitectónico.
 
@@ -163,8 +142,8 @@ La app **no está en el App Store** — es un proyecto personal. Se puede instal
 ## Hoja de Ruta
 
 - [x] Diseño de arquitectura y documento de ingeniería
-- [ ] Fase 0 — Entidades del dominio y tipos base
-- [ ] Fase 1 — Algoritmo STM con tests completos
+- [x] Fase 0 — Entidades del dominio y tipos base
+- [x] Fase 1 — Algoritmo STM con tests completos
 - [ ] Fase 2 — Capa de datos (WatermelonDB)
 - [ ] Fase 3 — Stores y ViewModels
 - [ ] Fase 4 — UI completa
@@ -180,6 +159,6 @@ MIT — ver [LICENSE](LICENSE)
 
 <div align="center">
 
-Hecho con amor 🌸
+Hecho con amor para Tiana🌸
 
 </div>
