@@ -1,10 +1,17 @@
 // src/app/index.tsx
-// Pantalla de inicio mínima (Fase 4, primer corte): solo confirma que la ruta
-// raíz se conecta al cycleStore/settingsStore cableados en _layout.tsx. El
-// diseño y los componentes atoms/molecules/organisms llegan en un paso posterior.
+// Pantalla de inicio (Fase 4): fertilidad de hoy + acciones para iniciar un
+// ciclo o registrar el día. Se recarga cada vez que la ruta gana foco (p.ej.
+// al volver de /log-entry) para reflejar lo recién guardado.
 
-import { useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { useCallback } from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { router, useFocusEffect } from 'expo-router';
 import { useCycleStore, useSettingsStore } from '@stores/AppStoresContext';
 import { selectHomeViewModel } from '@viewmodels/selectHomeViewModel';
 
@@ -15,12 +22,15 @@ export default function HomeScreen() {
   const isLoading = useCycleStore((s) => s.isLoading);
   const error = useCycleStore((s) => s.error);
   const load = useCycleStore((s) => s.load);
+  const startNewCycle = useCycleStore((s) => s.startNewCycle);
   const userName = useSettingsStore((s) => s.userName);
   const temperatureUnit = useSettingsStore((s) => s.temperatureUnit);
 
-  useEffect(() => {
-    void load();
-  }, [load]);
+  useFocusEffect(
+    useCallback(() => {
+      void load();
+    }, [load])
+  );
 
   const data = selectHomeViewModel({
     state: { cycle, todayEntry, fertilityStatus, isLoading, error },
@@ -45,10 +55,32 @@ export default function HomeScreen() {
         {data.fertilityLabel}
       </Text>
       <Text style={styles.message}>{data.fertilityMessage}</Text>
-      <Text style={styles.dayNumber}>Día {data.currentCycleDay} del ciclo</Text>
+      {cycle !== null ? (
+        <Text style={styles.dayNumber}>
+          Día {data.currentCycleDay} del ciclo
+        </Text>
+      ) : null}
       {data.error !== null ? (
         <Text style={styles.error}>{data.error}</Text>
       ) : null}
+
+      {cycle === null ? (
+        <Pressable
+          style={styles.button}
+          onPress={() => void startNewCycle(new Date())}
+        >
+          <Text style={styles.buttonText}>Comenzar ciclo</Text>
+        </Pressable>
+      ) : (
+        <Pressable
+          style={styles.button}
+          onPress={() => router.push('/log-entry')}
+        >
+          <Text style={styles.buttonText}>
+            {data.hasTodayEntry ? 'Editar registro de hoy' : 'Registrar hoy'}
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -86,5 +118,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#C2185B',
     marginTop: 16,
+  },
+  button: {
+    marginTop: 24,
+    backgroundColor: '#43A047',
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
