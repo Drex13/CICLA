@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
+    "drizzle-orm": "^0.45.2",
     "expo": "~57.0.19",
+    "expo-sqlite": "~57.0.2",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
     "react-native": "0.86.3"
   },
   "devDependencies": {
+    "@libsql/client": "^0.18.0",
     "@types/jest": "29.5.14",
     "@types/react": "~19.2.2",
     "babel-preset-expo": "~57.0.0",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~57.0.2",
     "eslint-config-prettier": "^10.1.8",

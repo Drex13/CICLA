@@ -8,9 +8,16 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
 export const startOfCivilDay = (d: Date): Date =>
   new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
-/** Timestamp UTC del día civil de `d` (para restas estables). */
+/** Timestamp UTC del día civil de `d` (para restas estables entre fechas). */
 export const civilDayTimestamp = (d: Date): number =>
   Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+
+/**
+ * Clave de persistencia de un día: ms de la medianoche LOCAL de `d`.
+ * Se usa como identidad de fecha en la DB, de modo que al releer `new Date(key)`
+ * se obtiene el mismo día del calendario en la zona del dispositivo.
+ */
+export const civilDayKey = (d: Date): number => startOfCivilDay(d).getTime();
 
 /**
  * Diferencia en días civiles: `to - from`.
