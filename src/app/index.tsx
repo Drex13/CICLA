@@ -72,14 +72,22 @@ export default function HomeScreen() {
           <Text style={styles.buttonText}>Comenzar ciclo</Text>
         </Pressable>
       ) : (
-        <Pressable
-          style={styles.button}
-          onPress={() => router.push('/log-entry')}
-        >
-          <Text style={styles.buttonText}>
-            {data.hasTodayEntry ? 'Editar registro de hoy' : 'Registrar hoy'}
-          </Text>
-        </Pressable>
+        <>
+          <Pressable
+            style={styles.button}
+            onPress={() => router.push('/log-entry')}
+          >
+            <Text style={styles.buttonText}>
+              {data.hasTodayEntry ? 'Editar registro de hoy' : 'Registrar hoy'}
+            </Text>
+          </Pressable>
+          <Pressable
+            style={styles.secondaryButton}
+            onPress={() => router.push('/chart')}
+          >
+            <Text style={styles.secondaryButtonText}>Ver gráfica</Text>
+          </Pressable>
+        </>
       )}
     </View>
   );
@@ -128,6 +136,19 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  secondaryButton: {
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: '#43A047',
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  secondaryButtonText: {
+    color: '#43A047',
     fontSize: 16,
     fontWeight: '600',
   },
