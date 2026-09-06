@@ -48,9 +48,14 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.greeting}>
-        Hola{data.userName ? `, ${data.userName}` : ''}
-      </Text>
+      <View style={styles.topRow}>
+        <Text style={styles.greeting}>
+          Hola{data.userName ? `, ${data.userName}` : ''}
+        </Text>
+        <Pressable onPress={() => router.push('/settings')}>
+          <Text style={styles.settingsLink}>Ajustes</Text>
+        </Pressable>
+      </View>
       <Text style={[styles.fertility, { color: data.fertilityColor }]}>
         {data.fertilityLabel}
       </Text>
@@ -104,10 +109,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
   greeting: {
     fontSize: 20,
     fontWeight: '600',
-    marginBottom: 4,
+  },
+  settingsLink: {
+    fontSize: 14,
+    color: '#43A047',
+    fontWeight: '600',
   },
   fertility: {
     fontSize: 28,
